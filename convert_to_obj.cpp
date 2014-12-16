@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
   std::string extension = filename.substr(idx+1);
   std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-  if (extension.compare("dae")) {
+  if (extension.compare("dae")==0) {
     vcg::tri::io::InfoDAE info;
     if (vcg::tri::io::ImporterDAE<MyMesh>::Open(m,filename.c_str(),info)!=0)
     {
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     printf("Error: Unknown extension %s\n",extension.c_str());
     return -1;
   }
-  std::string objname = filename.substr(0,idx)+"obj";
+  std::string objname = filename.substr(0,idx+1)+"obj";
   if (vcg::tri::io::ExporterOBJ<MyMesh>::Save(m,objname.c_str(),vcg::tri::io::ExporterOBJ<MyMesh>::GetExportMaskCapability()) != 0) {
     printf("Error writing %s\n",objname.c_str());
     return -1;
