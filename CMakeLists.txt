@@ -20,3 +20,5 @@ find_package(OpenGL REQUIRED)
 include_directories(vcglib)
 add_executable(convert_dae_to_obj convert_dae_to_obj.cpp vcglib/wrap/ply/plylib.cpp)
 target_link_libraries(convert_dae_to_obj ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTXMLPATTERNS_LIBRARY} ${QT_QTXML_LIBRARY})
+
+pods_install_executables(convert_dae_to_obj)

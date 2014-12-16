@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string>
+#include <algorithm>
 
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
@@ -34,15 +35,31 @@ int main(int argc, char* argv[])
 {
   // definition of type MyMesh
   MyMesh m;
-  vcg::tri::io::InfoDAE info;
   std::string filename(argv[1]);
-  std::string daename = filename+".dae";
-  if (vcg::tri::io::ImporterDAE<MyMesh>::Open(m,daename.c_str(),info)!=vcg::tri::io::ImporterOFF<MyMesh>::NoError)
-  {
-    printf("Error reading file %s\n",daename.c_str());
-    exit(-1);
+  std::string::size_type idx = filename.rfind('.');
+  if(idx == std::string::npos) {
+    printf("Couldn't determine file extension for %s\n",filename.c_str());
+    return -1;
   }
-  std::string objname = filename+".obj";
-  vcg::tri::io::ExporterOBJ<MyMesh>::Save(m,objname.c_str(),vcg::tri::io::ExporterOBJ<MyMesh>::GetExportMaskCapability());
+
+  std::string extension = filename.substr(idx+1);
+  std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+  if (extension.compare("dae")) {
+    vcg::tri::io::InfoDAE info;
+    if (vcg::tri::io::ImporterDAE<MyMesh>::Open(m,filename.c_str(),info)!=0)
+    {
+      printf("Error reading DAE mesh from file %s\n",filename.c_str());
+      return -1;
+    }
+  } else {
+    printf("Error: Unknown extension %s\n",extension.c_str());
+    return -1;
+  }
+  std::string objname = filename.substr(0,idx)+"obj";
+  if (vcg::tri::io::ExporterOBJ<MyMesh>::Save(m,objname.c_str(),vcg::tri::io::ExporterOBJ<MyMesh>::GetExportMaskCapability()) != 0) {
+    printf("Error writing %s\n",objname.c_str());
+    return -1;
+  }
   return 0;
 }
