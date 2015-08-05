@@ -52,6 +52,14 @@ int main(int argc, char* argv[])
       printf("Error reading DAE mesh from file %s\n",filename.c_str());
       return -1;
     }
+  } else if (extension.compare("stl")==0) {
+    int error,loadmask;
+    if (error=vcg::tri::io::ImporterSTL<MyMesh>::Open(m,filename.c_str(),loadmask)!=0)
+    {
+      printf("Error reading STL mesh from file %s\n",filename.c_str());
+      printf("%s",vcg::tri::io::ImporterSTL<MyMesh>::ErrorMsg(error));
+      return -1;
+    }
   } else {
     printf("Error: Unknown extension %s\n",extension.c_str());
     return -1;
