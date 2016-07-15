@@ -11,9 +11,9 @@ endif()
 enable_testing()
 
 find_package(Qt4 REQUIRED)
-SET(QT_USE_QTXML TRUE)
-INCLUDE(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+set(QT_USE_QTXML TRUE)
+include(${QT_USE_FILE})
+add_definitions(${QT_DEFINITIONS})
 
 find_package(OpenGL REQUIRED)
 
