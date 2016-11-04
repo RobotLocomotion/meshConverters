@@ -40,6 +40,7 @@ install(EXPORT meshconverters-targets
   DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
 install(FILES
+  COPYING
   vcglib/COPYING.VCGLIB
   vcglib/eigenlib/COPYING.EIGEN
   DESTINATION ${CMAKE_INSTALL_DOCDIR})
