@@ -13,6 +13,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
       MinSizeRel)
 endif()
 
+include(CTest)
+
 find_package(OpenGL REQUIRED)
 find_package(Qt4 REQUIRED)
 
@@ -26,4 +28,32 @@ if(NOT MSVC)
   set_target_properties(convert_to_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
-install(TARGETS convert_to_obj DESTINATION bin)
+export(TARGETS convert_to_obj FILE
+  "${CMAKE_BINARY_DIR}/meshconverters-targets.cmake")
+
+include(GNUInstallDirs)
+
+install(TARGETS convert_to_obj EXPORT meshconverters-targets
+  DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+install(EXPORT meshconverters-targets
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+
+install(FILES
+  COPYING
+  vcglib/COPYING.VCGLIB
+  vcglib/eigenlib/COPYING.EIGEN
+  DESTINATION ${CMAKE_INSTALL_DOCDIR})
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+  meshconverters-config.cmake.in meshconverters-config.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
+  NO_SET_AND_CHECK_MACRO NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/meshconverters-config.cmake"
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+
+include(CPack)
