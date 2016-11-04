@@ -28,11 +28,13 @@ if(NOT MSVC)
   set_target_properties(convert_to_obj PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
-install(TARGETS convert_to_obj DESTINATION bin)
+include(GNUInstallDirs)
+
+install(TARGETS convert_to_obj DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(FILES
   vcglib/COPYING.VCGLIB
   vcglib/eigenlib/COPYING.EIGEN
-  DESTINATION share/doc/${PROJECT_NAME})
+  DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 include(CPack)
