@@ -13,6 +13,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
       MinSizeRel)
 endif()
 
+include(CTest)
+
 find_package(OpenGL REQUIRED)
 find_package(Qt4 REQUIRED)
 
@@ -27,3 +29,5 @@ if(NOT MSVC)
 endif()
 
 install(TARGETS convert_to_obj DESTINATION bin)
+
+include(CPack)
