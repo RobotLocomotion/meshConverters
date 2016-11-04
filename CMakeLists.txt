@@ -30,4 +30,9 @@ endif()
 
 install(TARGETS convert_to_obj DESTINATION bin)
 
+install(FILES
+  vcglib/COPYING.VCGLIB
+  vcglib/eigenlib/COPYING.EIGEN
+  DESTINATION share/doc/${PROJECT_NAME})
+
 include(CPack)
